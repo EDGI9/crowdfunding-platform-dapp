@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Button = ({ btnType, title, handleClick, classes }) => {
   return (
     <button
