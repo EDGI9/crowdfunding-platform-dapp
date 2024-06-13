@@ -1,4 +1,4 @@
-const Button = ({ btnType, title, handleClick, classes }) => {
+const Button = ({ btnType = 'button', title = 'test', handleClick = () => {}, classes = "classA" }) => {
   return (
     <button
       data-testid="qa-button"

@@ -1,6 +1,7 @@
-import { render, fireEvent } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
+import { render, fireEvent, cleanup} from '@testing-library/react';
 import React from 'react';
-import Button from './Button';
+import Button from '../Button';
 
 describe('Button component', () => {
     //@ts-ignore 
@@ -9,31 +10,31 @@ describe('Button component', () => {
 
     const defaultProps = {
         title: 'Test Button',
-        handleClick: vi.fn(),
+        handleClick: () => 42,
         classes: 'bg-blue-500 hover:bg-blue-600',
     };
 
     beforeAll(() => {
-        component = render(<Button />);
+        component = render(<Button {...defaultProps}/>);
+        button = component.getByTestId('qa-button');
     });
 
-    it('renders the button with the given title', () => {
-        component.rerender(<Button title={defaultProps.title}></Button>)
-        button = component.getByTestId('qa-button');
-        expect(button).toBeInTheDocument();
+    it('renders component', () => {
+        expect(button).toBeTruthy(); 
+    })
+
+    it('renders the button title', () => {
+        expect(button.textContent).toBe(defaultProps.title);
     });
 
-    it('triggers the handleClick function when clicked', () => {
-        component.rerender(<Button handleClick={defaultProps.handleClick} />);
-        button = component.getByTestId('qa-button');
-        fireEvent.click(button);
-        expect(defaultProps.handleClick).toHaveBeenCalled();
+    it('triggers the handleClick function when clicked', async () => {
+        const spy = vi.spyOn(defaultProps, 'handleClick')
+        fireEvent.click(button)
+        expect(spy).toHaveBeenCalledOnce();
     });
 
     it('applies the given classes to the button', () => {
-        component.rerender(<Button classes={defaultProps.classes} />);
-        button = component.getByTestId('qa-button');
-        expect(button).toHaveClass(defaultProps.classes);
+        expect(button.classList.value).contains(defaultProps.classes);
     });
 
     afterAll(() => {
