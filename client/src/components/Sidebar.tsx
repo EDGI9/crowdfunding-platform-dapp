@@ -37,26 +37,19 @@ const Sidebar: React.FC<{}> = () => {
         <div className="flex flex-col justify-center items-center gap-3">
           {
           //@ts-ignore
-          navlinks.map((link) => {
-            if (link.name == 'home') {
-              return
-            } else {
-              return (
-                <Icon 
-                  key={link.name}
-                  {...link}
-                  isActive={isActive}
-                  handleClick={() => {
-                    if(!link.disabled) {
-                      setIsActive(link.name);
-                      navigate(link.link);
-                    }
-                  }}
-                />
-              )
-            }
-
-          })}
+          navlinks.map((link) => (
+            <Icon 
+              key={link.name}
+              {...link}
+              isActive={isActive}
+              handleClick={() => {
+                if(!link.disabled) {
+                  setIsActive(link.name);
+                  navigate(link.link);
+                }
+              }}
+            />
+          ))}
         </div>
 
         <Icon classes="bg-[#1c1c24] shadow-secondary" imgUrl={sun} name='sun' />
