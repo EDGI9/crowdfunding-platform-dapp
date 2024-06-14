@@ -1,4 +1,7 @@
-const Button = ({ btnType = 'button', title = 'test', handleClick = () => {}, classes = "classA" }) => {
+import React from 'react'
+import {ButtonProps} from '../interfaces/index.js'
+
+const Button: React.FC<ButtonProps> = ({ btnType = 'button', title, handleClick, classes }: ButtonProps) => {
   return (
     <button
       data-testid="qa-button"

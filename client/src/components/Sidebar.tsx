@@ -3,15 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { logo, sun } from '../assets/index.js';
 import { navlinks } from '../constants/index.js';
+import { SidebarProps } from "../interfaces/index.js";
 
-interface SidebarProps {
-  classes?: string, 
-  name?: string, 
-  imgUrl?: string, 
-  isActive?: string,
-  disabled?: boolean,
-  handleClick?: () => void
-}
 
 const Icon: React.FC<SidebarProps> = ({ classes, name, imgUrl, isActive, disabled, handleClick }:SidebarProps) => (
   <div data-testid={`qa-sidebar_icon-${name}`} className={`w-[48px] h-[48px] rounded-[10px] ${isActive && isActive === name && 'bg-[#2c2f32]'} flex justify-center items-center ${!disabled && 'cursor-pointer'} ${classes}`} onClick={(event)=> disabled == null || disabled == true  ? event.preventDefault() : handleClick}>
