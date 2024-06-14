@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import {Home} from "./pages";
+import {Home, CreateCampaign} from "./pages";
 import {Sidebar , Navbar} from "./components";
 
 const App = () => {
     return (
-        <div className='relative sm:-8 p-4 min-h-screen flex flex-row'>
+        <div className='relative sm:-8 p-4 bg-[#13131a] min-h-screen flex flex-row'>
             <div className="sm:flex hidden mr-10 relative">
                 <Sidebar />
             </div>
@@ -13,6 +13,7 @@ const App = () => {
                 <Navbar />
                 <Routes>
                     <Route path='/' element={<Home/>}/>
+                    <Route path="/create-campaign" element={<CreateCampaign />} />
                 </Routes>
             </div>
         </div>
