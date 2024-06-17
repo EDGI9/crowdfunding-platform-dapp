@@ -29,10 +29,10 @@ const Navbar = () => {
           btnType="button"
           title={address ? 'Create a campaign' : 'Connect'}
           classes={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
-         /*  handleClick={() => {
+          handleClick={() => {
             if(address) navigate('create-campaign')
-            else connect()
-          }} */
+            // else connect()
+          }}
         />
 
         <Link to="/profile" data-testid="qa-navbar_user" >
