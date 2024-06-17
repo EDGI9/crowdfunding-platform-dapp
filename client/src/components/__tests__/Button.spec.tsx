@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
-import { render, fireEvent, cleanup} from '@testing-library/react';
 import React from 'react';
+import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
+import { render, fireEvent, cleanup} from '@testing-library/react';
 import Button from '../Button';
 
 describe('Button component', () => {
@@ -10,11 +10,11 @@ describe('Button component', () => {
 
     const defaultProps = {
         title: 'Test Button',
-        handleClick: () => 42,
+        handleClick: vi.fn(),
         classes: 'bg-blue-500 hover:bg-blue-600',
     };
 
-    beforeAll(() => {
+    beforeEach(() => {
         component = render(<Button {...defaultProps}/>);
         button = component.getByTestId('qa-button');
     });
@@ -27,10 +27,9 @@ describe('Button component', () => {
         expect(button.textContent).toBe(defaultProps.title);
     });
 
-    it('triggers the handleClick function when clicked', async () => {
-        const spy = vi.spyOn(defaultProps, 'handleClick')
+    it('triggers the handleClick function when clicked', () => {
         fireEvent.click(button)
-        expect(spy).toHaveBeenCalledOnce();
+        expect(defaultProps.handleClick).toHaveBeenCalledOnce();
     });
 
     it('applies the given classes to the button', () => {

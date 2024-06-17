@@ -1,6 +1,6 @@
-import { RenderResult, render, screen } from '@testing-library/react';
-import { vi, beforeAll, it, describe, expect, beforeEach } from 'vitest';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { RenderResult, render, fireEvent } from '@testing-library/react';
+import { vi, it, describe, expect, beforeEach } from 'vitest';
 import { FormFieldProps } from '../../interfaces/index.js'
 import FormField from '../FormField';
 
@@ -14,13 +14,15 @@ describe('FormField component',()=>{
         inputType: 'text', 
         isTextArea: false,
         value: 'Default value',
-        handleChange: () => {}
+        handleChange: vi.fn()
     }
 
     const inputTypes = ['date', 'url', 'text']
 
     beforeEach(() => {
         component = render(<FormField {...defaultProps}></FormField>)
+        //@ts-ignore
+        input = component.getByTestId(`qa-formfield_${defaultProps.inputType}`)
     })
 
     it('renders the FormField component',()=> {
@@ -42,10 +44,20 @@ describe('FormField component',()=>{
         // check a list of input types and validates it
         expect(inputTypes).toContain(defaultProps.inputType)
     })
-    //WIP
-    it('checks if the correct input elemnt is redenred based on type prop value',()=> {})
-    it('verifies if placeholder is rendered',()=> {})
-    it('onChange event works and sends the correct data back',()=> {
-        // const spy = vi.spyOn(defaultProps, 'handleClick')
+    it('checks if the correct input elemnt is redenred based on type prop value',()=> {
+        const type = 'date'
+        const updatedProps = {...defaultProps, inputType: type }
+        component.rerender(<FormField {...updatedProps}></FormField>)
+        //@ts-ignore
+        input = component.getByTestId(`qa-formfield_${type}`)
+        expect(input).toHaveProperty("type", type);
+    })
+    it('verifies if placeholder is rendered',()=> {
+        expect(input).toHaveProperty("placeholder", defaultProps.placeholder);
+    })
+    it('onChange event works', async ()=> {
+        const updatedValue = 'test value'
+        await fireEvent.change(input, { target: { value: updatedValue } })
+        expect(defaultProps.handleChange).toHaveBeenCalledOnce();
     })
 })
